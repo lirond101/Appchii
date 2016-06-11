@@ -121,7 +121,7 @@ import java.util.List;
                 assetsEntityToAdd.setRooms(Float.parseFloat(rooms));
 
             if (isMamad)
-                assetsEntityToAdd.setMamad(Byte.parseByte(mamad));
+                assetsEntityToAdd.setMamad(Byte.parseByte("1"));
 
             if (isAirConditioner)
                 assetsEntityToAdd.setAirConditioner(Byte.parseByte("1"));
@@ -130,7 +130,7 @@ import java.util.List;
                 assetsEntityToAdd.setElevator(Byte.parseByte("1"));
 
             if(isSquare)
-                assetsEntityToAdd.setSquare(Float.parseFloat("1"));
+                assetsEntityToAdd.setSquare(Float.parseFloat(square));
 
             if(isStatus)
                 assetsEntityToAdd.setStatus(status);

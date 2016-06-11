@@ -12,7 +12,7 @@ import java.util.Collection;
  * Created by liron_d on 07/04/2016.
  */
 @Entity
-@Table(name = "assets", schema = "", catalog = "remax")
+@Table(name = "assets", schema = "", catalog = "ebdb")
 public class AssetsEntity {
     private Integer assetid;
     private String city;

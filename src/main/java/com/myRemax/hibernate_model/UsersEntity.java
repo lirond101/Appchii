@@ -12,7 +12,7 @@ import java.util.Collection;
  * Created by liron_d on 07/04/2016.
  */
 @Entity
-@Table(name = "users", schema = "", catalog = "remax")
+@Table(name = "users", schema = "", catalog = "ebdb")
 public class UsersEntity {
     private Integer userid;
     private String username;
