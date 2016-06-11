@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.myRemax.hibernate_model.GlobalTasksEntity" table="global_tasks" schema="" catalog="ebdb">
+        <id name="globalTasksid">
+            <column name="global_tasksid" sql-type="int" not-null="true"/>
+            <generator class="increment" />
+        </id>
+        <property name="dayOfCreate">
+            <column name="day_of_create" sql-type="date"/>
+        </property>
+        <!--<property name="author">-->
+            <!--<column name="author" sql-type="int"/>-->
+        <!--</property>-->
+        <property name="content">
+            <column name="content" sql-type="varchar" length="300"/>
+        </property>
+        <!--<property name="recipient">-->
+            <!--<column name="recipient" sql-type="int"/>-->
+        <!--</property>-->
+        <many-to-one name="usersByAuthor" class="com.myRemax.hibernate_model.UsersEntity">
+            <column name="author"/>
+        </many-to-one>
+        <many-to-one name="rolesByRecipient" class="com.myRemax.hibernate_model.RolesEntity">
+            <column name="recipient"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

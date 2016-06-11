@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.myRemax.hibernate_model.AssetsEntity" table="assets" schema="" catalog="ebdb">
+        <id name="assetid">
+            <column name="assetid" sql-type="int" not-null="true"/>
+            <generator class="increment" />
+        </id>
+        <property name="city">
+            <column name="city" sql-type="varchar" length="45" not-null="true"/>
+        </property>
+        <property name="street">
+            <column name="street" sql-type="varchar" length="100" not-null="true"/>
+        </property>
+        <property name="num_Address">
+            <column name="num_Address" sql-type="varchar" length="45" not-null="true"/>
+        </property>
+        <property name="type">
+            <column name="type" sql-type="varchar" length="100"/>
+        </property>
+        <property name="dayOfCreate">
+            <column name="day_of_create" sql-type="date"/>
+        </property>
+        <property name="floor">
+            <column name="floor" sql-type="float" precision="12"/>
+        </property>
+        <property name="numOfFloors">
+            <column name="numOfFloors" sql-type="float" precision="12"/>
+        </property>
+        <property name="price">
+            <column name="price" sql-type="int"/>
+        </property>
+        <property name="neighborhood">
+            <column name="neighborhood" sql-type="varchar" length="45"/>
+        </property>
+        <property name="rooms">
+            <column name="rooms" sql-type="float" precision="12"/>
+        </property>
+        <property name="mamad">
+            <column name="mamad" sql-type="tinyint"/>
+        </property>
+        <property name="airConditioner">
+            <column name="air_conditioner" sql-type="tinyint"/>
+        </property>
+        <property name="elevator">
+            <column name="elevator" sql-type="tinyint"/>
+        </property>
+        <property name="square">
+            <column name="square" sql-type="float" precision="12"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="varchar" length="100"/>
+        </property>
+        <property name="cust_Name">
+            <column name="cust_Name" sql-type="varchar" length="45"/>
+        </property>
+        <property name="cust_Tel">
+            <column name="cust_Tel" sql-type="varchar" length="45"/>
+        </property>
+        <property name="details">
+            <column name="details" sql-type="varchar" length="300"/>
+        </property>
+
+
+        <many-to-one name="usersByAgent" class="com.myRemax.hibernate_model.UsersEntity">
+            <column name="agent"/>
+        </many-to-one>
+        <set name="favoritesByAssetid" inverse="true">
+            <key>
+                <column name="asset" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.myRemax.hibernate_model.FavoritesEntity"/>
+        </set>
+        <set name="imagesByAssetid" inverse="true">
+            <key>
+                <column name="asset"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.myRemax.hibernate_model.ImagesEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

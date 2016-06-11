@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.myRemax.hibernate_model.RolesEntity" table="roles" schema="" catalog="ebdb">
+        <id name="idrole">
+            <column name="idrole" sql-type="int" not-null="true"/>
+        </id>
+        <property name="rolename">
+            <column name="rolename" sql-type="varchar" length="45"/>
+        </property>
+        <set name="globalTasksesByIdrole" inverse="true">
+            <key>
+                <column name="recipient"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.myRemax.hibernate_model.GlobalTasksEntity"/>
+        </set>
+        <set name="usersesByIdrole" inverse="true">
+            <key>
+                <column name="role"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.myRemax.hibernate_model.UsersEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.myRemax.hibernate_model.TestusersEntity" table="testusers" schema="remax">
+        <id name="userid">
+            <column name="userid" sql-type="int(11)"/>
+        </id>
+        <property name="dayOfCreate">
+            <column name="dayOfCreate" sql-type="date" not-null="true"/>
+        </property>
+        <property name="username">
+            <column name="username" sql-type="varchar(45)" length="45"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(45)" length="45"/>
+        </property>
+        <property name="firstname">
+            <column name="firstname" sql-type="varchar(45)" length="45" not-null="true"/>
+        </property>
+        <property name="lastname">
+            <column name="lastname" sql-type="varchar(45)" length="45" not-null="true"/>
+        </property>
+        <property name="email">
+            <column name="email" sql-type="varchar(100)" length="100"/>
+        </property>
+        <one-to-one name="user" class="com.myRemax.hibernate_model.ExampleDefaultNowEntity"/>
+    </class>
+</hibernate-mapping>

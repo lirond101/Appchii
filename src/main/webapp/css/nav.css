@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+section{
+  position:relative;
+  width:1080px;
+  height:175px;
+  margin:0px auto;
+}
+#lol{
+  width:100%;
+
+}
+#lol ul li{
+  display:inline-block;
+  list-style:none;
+  width:360px;
+  text-align:center;
+  font-family:Helvetica, sans-serif;
+  border: 1px dashed rgba(255,255,255, 0);  color:#4ec7dc;
+  padding:0px 0 0px 0;
+ 
+  cursor:pointer;
+  transition:all .1s;
+  -webkit-transition:all .1s;
+   line-height:130px;
+}
+
+#lol ul{
+ 
+  position:absolute;
+  width:100%;
+  padding:0;
+  z-index:100;
+}
+#lol div{
+  position:absolute;
+
+  top:16px;
+  border-bottom:medium #EF0408 solid;
+  width:360px;
+  height:85px;
+  z-index:99;
+  text-align:center;
+  margin-top:50px;
+
+ 
+ 
+  
+}
+
+

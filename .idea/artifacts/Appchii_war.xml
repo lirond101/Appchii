@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="Appchii:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SpringMVCRemaxApp-1.0.0.war">
+      <element id="artifact" artifact-name="Appchii:war exploded" />
+    </root>
+  </artifact>
+</component>

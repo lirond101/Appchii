@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.myRemax.hibernate_model.UsersEntity" table="users" schema="" catalog="ebdb">
+        <id name="userid">
+            <column name="userid" sql-type="int" not-null="true"/>
+            <generator class="increment" />
+        </id>
+        <property name="username">
+            <column name="username" sql-type="varchar" length="45" not-null="true"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar" length="45" not-null="true"/>
+        </property>
+        <property name="firstname">
+            <column name="firstname" sql-type="varchar" length="45"/>
+        </property>
+        <property name="lastname">
+            <column name="lastname" sql-type="varchar" length="45"/>
+        </property>
+        <property name="telNum">
+            <column name="tel_num" sql-type="varchar" length="45"/>
+        </property>
+        <property name="email">
+            <column name="email" sql-type="varchar" length="45"/>
+        </property>
+        <!--<property name="role">-->
+            <!--<column name="role" sql-type="int"/>-->
+        <!--</property>-->
+        <property name="dayOfCreate">
+            <column name="day_of_create" sql-type="date"/>
+        </property>
+        <many-to-one name="rolesByRole" class="com.myRemax.hibernate_model.RolesEntity">
+            <column name="role"/>
+        </many-to-one>
+        <set name="assetsesByUserid" inverse="true">
+            <key>
+                <column name="agent"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.myRemax.hibernate_model.AssetsEntity"/>
+        </set>
+        <set name="favoritesByUserid" inverse="true">
+            <key>
+                <column name="user" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.myRemax.hibernate_model.FavoritesEntity"/>
+        </set>
+        <set name="globalTasksesByUserid" inverse="true">
+            <key>
+                <column name="author"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.myRemax.hibernate_model.GlobalTasksEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>
