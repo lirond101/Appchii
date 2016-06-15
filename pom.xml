@@ -11,10 +11,17 @@
     <name>SpringMVCRemaxApp</name>
 
     <properties>
+        <!-- Platform -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!--versions-->
         <springframework.version>4.2.5.RELEASE</springframework.version>
         <mysql.connector.version>5.1.31</mysql.connector.version>
         <hibernate.version>5.1.0.Final</hibernate.version>
+        <!-- Application properties -->
+        <app.conf.properties.secret>MySoLovely_secret_key_for_jwt</app.conf.properties.secret>
+        <app.conf.properties.expiration>604800</app.conf.properties.expiration>
+        <app.conf.properties.authorisation.header>Authorization</app.conf.properties.authorisation.header>
     </properties>
 
     <dependencies>
@@ -76,7 +83,7 @@
             <version>${springframework.version}</version>
         </dependency>
 
-        <!--Spring security!-->
+        <!--Spring com.myRemax.security!-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
@@ -191,16 +198,16 @@
             <version>1.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.mobile</groupId>
-            <artifactId>spring-mobile-device</artifactId>
-            <version>1.1.5.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.7.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.mobile</groupId>-->
+            <!--<artifactId>spring-mobile-device</artifactId>-->
+            <!--<version>1.1.5.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+            <!--<artifactId>jackson-databind</artifactId>-->
+            <!--<version>2.7.0</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

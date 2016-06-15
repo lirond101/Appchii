@@ -1,2 +1,0 @@
-/* JS for demo only */
-

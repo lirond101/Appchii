@@ -34,7 +34,7 @@ public class assetTest {
 //
 //        System.out.println("Asset inserted!");
 
-            List<AssetsEntity> assetsEntities = assetManager.getAssetByFullAddress("באר שבע", "בן יהודה", "");
+            List<AssetsEntity> assetsEntities = assetManager.getAssetByFullAddress("באר שבע", "הצבי", "");
 
             for (int i=0; i<assetsEntities.size(); i++) {
                 System.out.println("\nAsset fetched by address!"

@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = "/search")
+@RequestMapping(value = "/api/search")
 public class SearchController {
 
 	@Autowired
@@ -32,6 +33,7 @@ public class SearchController {
 	@RequestMapping(value = "/searchAssetByAddress", method={RequestMethod.GET}, produces= { "application/json; charset=UTF-8" })
 	@ResponseBody
 	@JsonView(AssetsEntity.class)
+	@PreAuthorize("hasRole('USER')")
 	public String searchAssetByAddress(@RequestParam("Street") String street, HttpServletResponse response)
 			throws UnsupportedEncodingException {
 

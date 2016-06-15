@@ -24,8 +24,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     }
 
     //for cross domains connection
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CorsInterceptor());
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new CorsInterceptor());
+//    }
 }
