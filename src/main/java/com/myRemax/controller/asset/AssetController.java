@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,7 @@ import java.util.List;
 
     @RequestMapping(value = "/addAsset", method = {RequestMethod.POST})
     @JsonView(AssetsEntity.class)
+    @PreAuthorize("hasRole('USER')")
     public void addAsset(@RequestParam("City") String city, @RequestParam("Street") String street,
                          @RequestParam("Type") String type, @RequestParam("Num_Address") String num_Address,
                          @RequestParam("Agent") String agent, @RequestParam("Floor") String floor,

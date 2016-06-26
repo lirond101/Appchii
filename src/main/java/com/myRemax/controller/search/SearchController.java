@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping(value = "/api/search")
+@RequestMapping(value = "/search")
 public class SearchController {
 
 	@Autowired
@@ -33,7 +33,7 @@ public class SearchController {
 	@RequestMapping(value = "/searchAssetByAddress", method={RequestMethod.GET}, produces= { "application/json; charset=UTF-8" })
 	@ResponseBody
 	@JsonView(AssetsEntity.class)
-	@PreAuthorize("hasRole('USER')")
+//	@PreAuthorize("hasRole('USER')")
 	public String searchAssetByAddress(@RequestParam("Street") String street, HttpServletResponse response)
 			throws UnsupportedEncodingException {
 
@@ -58,12 +58,14 @@ public class SearchController {
 	@RequestMapping(value = "/searchAssetsByParams", method={RequestMethod.POST},consumes = "application/json", produces= { "application/json; charset=UTF-8" })
 	@ResponseBody
 	@JsonView(AssetsEntity.class)
-	public String serchAssetsByParams(@RequestParam("Type") String type, @RequestParam("Agent") String agent,
-									  @RequestParam("FromFloor") String floor, @RequestParam("FromPrice") String fromPrice,
+	public String serchAssetsByParams(@RequestParam("City") String city, @RequestParam("Street") String street,
+									  @RequestParam("Type") String type, @RequestParam("Agent") String agent,
+									  @RequestParam("Floor") String floor, @RequestParam("FromPrice") String fromPrice,
 									  @RequestParam("ToPrice") String toPrice, @RequestParam("Neighborhood") String neighborhood,
 									  @RequestParam("Rooms") String rooms, @RequestParam("Mamad") String mamad,
 									  @RequestParam("AirCon") String airCon, @RequestParam("Elevator") String elevator,
-									  @RequestParam("City") String city, HttpServletResponse response)
+									  @RequestParam("Square") String square,  @RequestParam("Status") String status,
+									  HttpServletResponse response)
 	{
 
 		System.out.println(type+", "+agent+", "+floor+", "+fromPrice+", "+toPrice+", "+

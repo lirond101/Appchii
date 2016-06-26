@@ -13,7 +13,9 @@ public class FavoritesEntity {
     private Integer user;
     private Integer asset;
     private Date dayOfCreate;
+    @org.codehaus.jackson.annotate.JsonManagedReference
     private UsersEntity usersByUser;
+    @org.codehaus.jackson.annotate.JsonManagedReference
     private AssetsEntity assetsByAsset;
 
     @Id

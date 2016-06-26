@@ -98,7 +98,7 @@
 
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
-        <url-pattern>/api/search/searchAssetByAddress</url-pattern>
+        <url-pattern>/search/searchAssetByAddress</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

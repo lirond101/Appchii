@@ -1,8 +1,11 @@
 package com.myRemax.hibernate_model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.codehaus.jackson.annotate.JsonUnwrapped;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -34,7 +37,8 @@ public class AssetsEntity {
     private String cust_Name;
     private String cust_Tel;
 
-    @JsonIgnore
+//    @JsonIgnore
+    @org.codehaus.jackson.annotate.JsonManagedReference
     private UsersEntity usersByAgent;
     @JsonIgnore
     private Collection<FavoritesEntity> favoritesByAssetid;
@@ -286,7 +290,7 @@ public class AssetsEntity {
         result = 31 * result + (details != null ? details.hashCode() : 0);
         return result;
     }
-    @JsonIgnore
+//    @JsonUnwrapped
 //    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "agent", referencedColumnName = "userid")

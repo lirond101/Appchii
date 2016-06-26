@@ -1,8 +1,7 @@
 package com.myRemax.hibernate_model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
+import org.codehaus.jackson.annotate.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -13,6 +12,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "users", schema = "", catalog = "ebdb")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="@id")
 public class UsersEntity {
     private Integer userid;
     private String username;
@@ -22,9 +22,13 @@ public class UsersEntity {
     private String telNum;
     private String email;
     private Date dayOfCreate;
+    @org.codehaus.jackson.annotate.JsonBackReference
     private Collection<AssetsEntity> assetsesByUserid;
+    @org.codehaus.jackson.annotate.JsonBackReference
     private Collection<FavoritesEntity> favoritesByUserid;
+    @org.codehaus.jackson.annotate.JsonBackReference
     private Collection<GlobalTasksEntity> globalTasksesByUserid;
+    @org.codehaus.jackson.annotate.JsonBackReference
     private RolesEntity rolesByRole;
 
     @Id
@@ -151,7 +155,7 @@ public class UsersEntity {
         return result;
     }
 
-//    @JsonManagedReference
+
     @OneToMany(mappedBy = "usersByAgent")
     public Collection<AssetsEntity> getAssetsesByUserid() {
         return assetsesByUserid;

@@ -14,7 +14,9 @@ public class GlobalTasksEntity {
     private Integer author;
     private String content;
     private Integer recipient;
+    @org.codehaus.jackson.annotate.JsonManagedReference
     private UsersEntity usersByAuthor;
+    @org.codehaus.jackson.annotate.JsonManagedReference
     private RolesEntity rolesByRecipient;
 
     @Id
