@@ -29,10 +29,20 @@ public class AssetManagerImpl implements AssetManager {
     public List<AssetsEntity> getAssetByFullAddress(String city, String street, String num_Address) {  return assetDAO.getAssetByFullAddress(city, street, num_Address);  }
 
     @Transactional
+    public List<AssetsEntity> getAssetByParams(String city,
+                                        String type,String agent,
+                                        String floor, String fromPrice,
+                                        String toPrice, String neighborhood,
+                                        String rooms, String mamad,
+                                        String airCon,  String elevator,
+                                        String square,   String status)
+    {  return assetDAO.getAssetByParams(city, type, agent, floor, fromPrice, toPrice, neighborhood, rooms, mamad, airCon, elevator, square, status);   }
+
+    @Transactional
     public List<AssetsEntity> getAssets() {   return assetDAO.getAssets();   }
 
     @Transactional
-    public List<AssetsEntity> getAssetsByAgent(int agentID) {  return assetDAO.getAssetsByAgent(agentID); }
+    public List<AssetsEntity> getAssetsByAgent(String agentUN) {  return assetDAO.getAssetsByAgent(agentUN); }
 
     public AssetsEntity getAssetByStreet(String street) {
         return null;

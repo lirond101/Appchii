@@ -13,6 +13,7 @@
        <security:http auto-config="true" create-session="stateless">
               <security:intercept-url pattern="/api/secur*" access="permitAll" />
               <security:intercept-url pattern="/api/search/*" access="hasRole('USER')" />
+              <security:intercept-url pattern="/api/login/*" access="hasRole('USER')" />
               <security:intercept-url pattern="/api/admin/*" access="hasRole('ADMIN')" />
               <security:csrf disabled="true" />
               <security:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter" />
@@ -31,7 +32,7 @@
               <security:authentication-provider>
                      <!-- Dummy users/pass/roles -->
                      <security:user-service>
-                            <security:user name="bill" password="bill" authorities="ROLE_USER" />
+                            <security:user name="testUser" password="testPass" authorities="ROLE_USER" />
                             <security:user name="admin" password="admin" authorities="ROLE_ADMIN,ROLE_USER" />
                             <security:user name="sadmin" password="sadmin" authorities="ROLE_SADMIN,ROLE_ADMIN,ROLE_USER" />
                      </security:user-service>

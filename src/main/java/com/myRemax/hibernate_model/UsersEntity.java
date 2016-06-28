@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "users", schema = "", catalog = "ebdb")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="@id")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="@id")
 public class UsersEntity {
     private Integer userid;
     private String username;

@@ -17,9 +17,17 @@ public interface AssetDAO {
 
     List<AssetsEntity> getAssetByFullAddress(String city, String street, String num_Address);
 
+    List<AssetsEntity> getAssetByParams(String city,
+                                        String type,String agent,
+                                        String floor, String fromPrice,
+                                        String toPrice, String neighborhood,
+                                        String rooms,String mamad,
+                                        String airCon,  String elevator,
+                                        String square,   String status);
+
     List<AssetsEntity> getAssets();
 
-    List<AssetsEntity> getAssetsByAgent(int agentID);
+    List<AssetsEntity> getAssetsByAgent(String agentUN);
 
     AssetsEntity getAssetByStreet(String street);
 }
