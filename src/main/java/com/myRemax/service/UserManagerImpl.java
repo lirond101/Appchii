@@ -30,6 +30,10 @@ public class UserManagerImpl implements UserManager {
     public UsersEntity getUser(String username) {
         return userDAO.getUser(username);
     }
+
+    @Transactional
+    public Integer getUserByName(String name) {return userDAO.getUserByName(name);}
+
     @Transactional
     public List<UsersEntity> getUsers() {
         return userDAO.getUsers();

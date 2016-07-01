@@ -8,6 +8,7 @@ import com.myRemax.service.AssetManagerImpl;
 import com.myRemax.service.UserManager;
 import com.myRemax.service.UserManagerImpl;
 import com.myRemax.util.HibernateUtil;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -29,7 +30,7 @@ import java.util.List;
  */
 
     @RestController
-    @RequestMapping(value = "/asset")
+    @RequestMapping(value = "/api/asset")
     public class AssetController {
 
     @Autowired
@@ -41,7 +42,7 @@ import java.util.List;
     @RequestMapping(value = "/addAsset", method = {RequestMethod.POST})
     @JsonView(AssetsEntity.class)
     @PreAuthorize("hasRole('USER')")
-    public void addAsset(@RequestParam("City") String city, @RequestParam("Street") String street,
+    public String addAsset(@RequestParam("City") String city, @RequestParam("Street") String street,
                          @RequestParam("Type") String type, @RequestParam("Num_Address") String num_Address,
                          @RequestParam("Agent") String agent, @RequestParam("Floor") String floor,
                          @RequestParam("Price") String price, @RequestParam("Neighborhood") String neighborhood,
@@ -90,8 +91,9 @@ import java.util.List;
         if (details != "")
             isDetails = true;
 
-        //Session session = null;
+        String json = "";
         AssetsEntity assetsEntityToAdd = null;
+        AssetsEntity toReturn = null;
         HttpStatus httpStatus = HttpStatus.OK;
 
         try {
@@ -146,8 +148,12 @@ import java.util.List;
             if(isDetails)
                 assetsEntityToAdd.setDetails(details);
 
-            assetManager.insertAsset(assetsEntityToAdd);
-
+            Integer assetID = assetManager.insertAsset(assetsEntityToAdd);
+            if(assetID!=null) {
+                toReturn = assetManager.getAsset(assetID);
+                ObjectMapper objectMapper = new ObjectMapper();
+                json = objectMapper.writeValueAsString(toReturn);
+            }
         } catch (Exception e) {
             System.out.println("There was a problem while adding an asset!");
             System.out.println(e.getMessage());
@@ -155,6 +161,7 @@ import java.util.List;
             response.setHeader("error_Message", e.getMessage());
         }
         response.setStatus(httpStatus.value());
+        return json;
     }
 
     @RequestMapping(value = "/editAsset", method = {RequestMethod.POST})

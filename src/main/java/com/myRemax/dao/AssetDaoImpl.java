@@ -19,8 +19,8 @@ public class AssetDaoImpl implements AssetDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void insertAsset(AssetsEntity asset) {
-        sessionFactory.getCurrentSession().save(asset);
+    public Integer insertAsset(AssetsEntity asset) {
+        return (Integer)sessionFactory.getCurrentSession().save(asset);
     }
 
     public AssetsEntity getAsset(int assetID) {
@@ -50,24 +50,27 @@ public class AssetDaoImpl implements AssetDAO {
     }
 
     public List<AssetsEntity> getAssetByParams(String city,
-                                        String type,String agent,
-                                        String floor, String fromPrice,
+                                        String type, Integer agent,
+                                        String fromFloor, String toFloor, String fromPrice,
                                         String toPrice, String neighborhood,
                                         String rooms,String mamad,
                                         String airCon,  String elevator,
                                         String square,   String status) {
 
-        boolean isStreet = false, isType = false, isAgent = false, isFloor = false, isFromPrice = false, isToPrice = false,
+        boolean  isType = false, isAgent = false, isFromFloor = false, isToFloor = false, isFromPrice = false, isToPrice = false,
                 isNeighborhood = false, isRooms = false, isMamad = false, isAirConditioner = false, isElevator = false, isSquare = false, isStatus = false;
         boolean isAndHasUsed = false;
         if (type != "")
             isType = true;
 //        if (street != "")
 //            isStreet = true;
-        if (agent != "")
+        if (agent != null) {
             isAgent = true;
-        if (floor != "")
-            isFloor = true;
+        }
+        if (fromFloor != "")
+            isFromFloor = true;
+        if (toFloor != "")
+            isToFloor = true;
         if (fromPrice != "")
             isFromPrice = true;
         if (toPrice != "")
@@ -87,101 +90,117 @@ public class AssetDaoImpl implements AssetDAO {
         if (square != "")
             isSquare = true;
 
-        String queryToBuild = "from AssetsEntity where city=:city";
-
-//        if (isStreet) {
-//            if (!isAndHasUsed) {
-//                queryToBuild += " Street=" + street;
-//                isAndHasUsed = true;
-//            } else queryToBuild += " AND Street=" + street;
-//        }
+        String queryToBuild = "from AssetsEntity where city=:city AND";
 
         if (isType) {
-            if (isAndHasUsed) {
-                queryToBuild += " Type=" + type;
-
-            } else {queryToBuild += " AND Type=" + type;
-            isAndHasUsed = true;}
+            if (!isAndHasUsed) {
+                queryToBuild += " type=:type";
+                isAndHasUsed = true;
+            } else queryToBuild += " AND type=:type";
         }
 
         if (isAgent) {
-            if (isAndHasUsed) {
-                queryToBuild += " Agent=" + agent;
-
-            } else {queryToBuild += " AND Agent=" + agent;
-                isAndHasUsed = true;}
+            if (!isAndHasUsed) {
+                queryToBuild += " usersByAgent.userid=:agent";
+                isAndHasUsed = true;
+            } else queryToBuild += " AND usersByAgent.userid=:agent";
         }
 
-        if (isFloor) {
+        if (isFromFloor && isToFloor) {
             if (!isAndHasUsed) {
-                queryToBuild += " Floor=" + floor;
+                queryToBuild += " floor BETWEEN :fromFloor AND :toFloor";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Floor=" + floor;
+            } else queryToBuild += " AND floor BETWEEN :fromFloor AND :toFloor" ;
         }
 
         if (isFromPrice && isToPrice) {
             if (!isAndHasUsed) {
-                queryToBuild += " Price BETWEEN " + fromPrice + " AND " + toPrice;
+                queryToBuild += " price BETWEEN :fromPrice AND :toPrice";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Price BETWEEN " + fromPrice + " AND " + toPrice;
+            } else queryToBuild += " AND price BETWEEN :fromPrice AND :toPrice";
         }
 
         if (isNeighborhood) {
             if (!isAndHasUsed) {
-                queryToBuild += " Neighborhood=" + neighborhood;
+                queryToBuild += " neighborhood=:neighborhood";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Neighborhood=" + neighborhood;
+            } else queryToBuild += " AND neighborhood=:neighborhood";
         }
 
         if (isRooms) {
             if (!isAndHasUsed) {
-                queryToBuild += " Rooms=" + rooms;
+                queryToBuild += " rooms=:rooms";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Rooms=" + rooms;
+            } else queryToBuild += " AND rooms=:rooms";
         }
 
         if (isMamad) {
             if (!isAndHasUsed) {
-                queryToBuild += " Mamad=" + mamad;
+                queryToBuild += " mamad=:mamad";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Mamad=" + mamad;
+            } else queryToBuild += " AND mamad=:mamad";
         }
 
-        if (isAirConditioner) {
+        if (isAirConditioner){
             if (!isAndHasUsed) {
-                queryToBuild += " Air_Conditioner=" + airCon;
+                queryToBuild += " air_Conditioner=:airCon";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Air_Conditioner=" + airCon;
+            } else queryToBuild += " AND air_Conditioner=:airCon";
         }
 
         if (isElevator) {
             if (!isAndHasUsed) {
-                queryToBuild += " Elevator=" + elevator;
+                queryToBuild += " elevator=:elevator";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Elevator=" + elevator;
+            } else queryToBuild += " AND elevator=:elevator";
         }
 
         if (isSquare) {
             if (!isAndHasUsed) {
-                queryToBuild += " Square=" + square;
+                queryToBuild += " square=:square";
                 isAndHasUsed = true;
-            } else queryToBuild += " AND Square=" + square;
+            } else queryToBuild += " AND square=:square";
         }
 
         if (isStatus) {
             if (!isAndHasUsed) {
-                queryToBuild += " Status=" + status;
-                isAndHasUsed = true;
-            } else queryToBuild += " AND Status=" + status;
+                queryToBuild += " status=:status";
+            } else queryToBuild += " AND status=:status";
         }
 
-        if (queryToBuild == "from AssetsEntity where city=:city")
+        if (queryToBuild == "from AssetsEntity where city=:city AND")
             queryToBuild = queryToBuild.substring(0, 34);
 
         Query query = sessionFactory.
                 getCurrentSession().
                 createQuery(queryToBuild);
         query.setParameter("city", "באר שבע");
+        if(isType)
+            query.setParameter("type", type);
+        if(isAgent)
+            query.setParameter("agent", agent);
+        if(isFromFloor)
+            query.setParameter("fromFloor", Float.parseFloat(fromFloor));
+        if(isToFloor)
+            query.setParameter("toFloor", Float.parseFloat(toFloor));
+        if(isFromPrice)
+            query.setParameter("fromPrice", Integer.parseInt(fromPrice));
+        if(isToPrice)
+            query.setParameter("toPrice", Integer.parseInt(toPrice));
+        if(isNeighborhood)
+            query.setParameter("neighborhood", neighborhood);
+        if(isRooms)
+            query.setParameter("rooms", Float.parseFloat(rooms));
+        if(isMamad)
+            query.setParameter("mamad", Byte.parseByte("1"));
+        if(isAirConditioner)
+            query.setParameter("airCon", Byte.parseByte("1"));
+        if(isElevator)
+            query.setParameter("elevator", Byte.parseByte("1"));
+        if(isSquare)
+            query.setParameter("square", Float.parseFloat(square));
+        if(isStatus)
+            query.setParameter("status", status);
         return query.list();
 
     }

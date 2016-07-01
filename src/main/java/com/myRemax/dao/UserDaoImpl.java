@@ -37,6 +37,15 @@ public class UserDaoImpl implements UserDAO {
         return (UsersEntity) query.list().get(0);
     }
 
+    public Integer getUserByName(String name) {
+        Query query = sessionFactory.
+                getCurrentSession().
+                createQuery("from UsersEntity where firstname like :name");
+        query.setParameter("name", '%' + name + '%');
+        UsersEntity usersEntity = (UsersEntity) query.list().get(0);
+        return usersEntity.getUserid();
+    }
+
     public List<UsersEntity> getUsers() {
         Criteria criteria = sessionFactory.
                 getCurrentSession().

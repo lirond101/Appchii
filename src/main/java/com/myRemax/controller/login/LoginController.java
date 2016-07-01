@@ -10,12 +10,16 @@ import org.codehaus.jackson.map.annotate.JsonView;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
-@RequestMapping(value = "/login")
+@RequestMapping(value = "/api/login")
 public class LoginController {
 
 	@Autowired
@@ -24,6 +28,7 @@ public class LoginController {
 	@Autowired
 	private AssetManager assetManager;
 
+	public LoginController(){}
 
 //	@RequestMapping(value = "/validate_User", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 //	@ResponseBody
@@ -58,13 +63,14 @@ public class LoginController {
 
 	@RequestMapping(value = "/getAssetsByAgent", method = {RequestMethod.GET}, produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	//@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER')")
 	@JsonView(AssetsEntity.class)
-	public ResponseEntity getAssetsByAgent(@RequestParam("Username") String username) {
+	public String getAssetsByAgent(@RequestParam("Username") String username, HttpServletResponse response) {
 
 		System.out.println(username);
 		List<AssetsEntity> l_asset = null;
 		String json = "";
+		HttpStatus httpStatus = HttpStatus.OK;
 
 		try {
 			l_asset = assetManager.getAssetsByAgent(username);
@@ -75,10 +81,11 @@ public class LoginController {
 
 		} catch (Exception e) {
 			System.out.println("There was a problem while retreiving assets!");
-			System.out.println(e.getMessage());
+			httpStatus = HttpStatus.CONFLICT;
+			response.setHeader("error_Message", e.getMessage());
 		}
-
-		return ResponseEntity.ok(json);
+		response.setStatus(httpStatus.value());
+		return json;
 	}
 }
 

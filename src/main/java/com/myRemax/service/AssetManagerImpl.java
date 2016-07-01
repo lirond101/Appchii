@@ -20,7 +20,7 @@ public class AssetManagerImpl implements AssetManager {
     private AssetDAO assetDAO;
 
     @Transactional
-    public void insertAsset(AssetsEntity asset) {  assetDAO.insertAsset(asset);  }
+    public Integer insertAsset(AssetsEntity asset) {  return assetDAO.insertAsset(asset);  }
 
     @Transactional
     public AssetsEntity getAsset(int assetID) {  return assetDAO.getAsset(assetID);  }
@@ -30,13 +30,13 @@ public class AssetManagerImpl implements AssetManager {
 
     @Transactional
     public List<AssetsEntity> getAssetByParams(String city,
-                                        String type,String agent,
-                                        String floor, String fromPrice,
+                                        String type,Integer agent,
+                                        String fromFloor, String toFloor, String fromPrice,
                                         String toPrice, String neighborhood,
                                         String rooms, String mamad,
                                         String airCon,  String elevator,
                                         String square,   String status)
-    {  return assetDAO.getAssetByParams(city, type, agent, floor, fromPrice, toPrice, neighborhood, rooms, mamad, airCon, elevator, square, status);   }
+    {  return assetDAO.getAssetByParams(city, type, agent, fromFloor,toFloor, fromPrice, toPrice, neighborhood, rooms, mamad, airCon, elevator, square, status);   }
 
     @Transactional
     public List<AssetsEntity> getAssets() {   return assetDAO.getAssets();   }

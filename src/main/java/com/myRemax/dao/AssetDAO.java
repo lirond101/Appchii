@@ -11,15 +11,15 @@ import java.util.List;
 
 @Service
 public interface AssetDAO {
-    void insertAsset(AssetsEntity asset);
+    Integer insertAsset(AssetsEntity asset);
 
     AssetsEntity getAsset(int assetID);
 
     List<AssetsEntity> getAssetByFullAddress(String city, String street, String num_Address);
 
     List<AssetsEntity> getAssetByParams(String city,
-                                        String type,String agent,
-                                        String floor, String fromPrice,
+                                        String type, Integer agent,
+                                        String fromFloor, String toFloor, String fromPrice,
                                         String toPrice, String neighborhood,
                                         String rooms,String mamad,
                                         String airCon,  String elevator,

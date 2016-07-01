@@ -14,5 +14,7 @@ public interface UserManager {
 
     UsersEntity getUser(String username);
 
+    Integer getUserByName(String name);
+
     List<UsersEntity> getUsers();
 }
