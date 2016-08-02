@@ -38,10 +38,26 @@ public class UserDaoImpl implements UserDAO {
     }
 
     public Integer getUserByName(String name) {
-        Query query = sessionFactory.
-                getCurrentSession().
-                createQuery("from UsersEntity where firstname like :name");
-        query.setParameter("name", '%' + name + '%');
+        Query query = null;
+        int index = name.indexOf(' ');
+        if (index != -1 && name.length()-(index+1)>0) {
+            String fn = name.substring(0, index);
+            System.out.println(fn);
+            String ln = name.substring(index+1, name.length());
+            System.out.println(ln);
+            query = sessionFactory.
+                    getCurrentSession().
+                    createQuery("from UsersEntity where firstname like :fname and lastname like :lname");
+            query.setParameter("fname", '%' + fn + '%');
+            query.setParameter("lname", '%' + ln + '%');
+        }
+        else{
+            query = sessionFactory.
+                    getCurrentSession().
+                    createQuery("from UsersEntity where firstname like :fname");
+            query.setParameter("fname", '%' + name + '%');
+        }
+
         UsersEntity usersEntity = (UsersEntity) query.list().get(0);
         return usersEntity.getUserid();
     }

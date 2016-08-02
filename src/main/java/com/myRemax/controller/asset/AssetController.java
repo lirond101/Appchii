@@ -2,28 +2,16 @@ package com.myRemax.controller.asset;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.myRemax.hibernate_model.AssetsEntity;
-import com.myRemax.hibernate_model.UsersEntity;
 import com.myRemax.service.AssetManager;
-import com.myRemax.service.AssetManagerImpl;
 import com.myRemax.service.UserManager;
-import com.myRemax.service.UserManagerImpl;
-import com.myRemax.util.HibernateUtil;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
+
 
 /**
  * Created by liron_d on 17/03/2016.
@@ -42,7 +30,7 @@ import java.util.List;
     @RequestMapping(value = "/addAsset", method = {RequestMethod.POST})
     @JsonView(AssetsEntity.class)
     @PreAuthorize("hasRole('USER')")
-    public String addAsset(@RequestParam("City") String city, @RequestParam("Street") String street,
+    public ResponseEntity addAsset(@RequestParam("City") String city, @RequestParam("Street") String street,
                          @RequestParam("Type") String type, @RequestParam("Num_Address") String num_Address,
                          @RequestParam("Agent") String agent, @RequestParam("Floor") String floor,
                          @RequestParam("Price") String price, @RequestParam("Neighborhood") String neighborhood,
@@ -50,8 +38,7 @@ import java.util.List;
                          @RequestParam("AirCon") String airCon, @RequestParam("Elevator") String elevator,
                          @RequestParam("Square") String square,  @RequestParam("Status") String status,
                          @RequestParam("Customer_Name") String cust_Name, @RequestParam("Customer_Tel") String cust_Tel,
-                         @RequestParam("NumOfFloors") String numOfFloors, @RequestParam("Details") String details,
-                         HttpServletResponse response) {
+                         @RequestParam("NumOfFloors") String numOfFloors, @RequestParam("Details") String details) {
 
         System.out.println(city + ", " + street + ", " + num_Address + ", " + type + ", " + agent + ", " + floor + ", " + numOfFloors + ", " + price + ", " +
                 neighborhood + ", " + rooms + ", " + mamad + ", " + airCon + ", " + elevator + ", " + square + ", " + status + ", " + cust_Name +
@@ -99,6 +86,8 @@ import java.util.List;
         try {
             assetsEntityToAdd = new AssetsEntity();
 
+            //TODO erase static city defining!
+            city = "באר שבע";
             assetsEntityToAdd.setCity(city);
             assetsEntityToAdd.setStreet(street);
             assetsEntityToAdd.setNum_Address(num_Address);
@@ -157,11 +146,9 @@ import java.util.List;
         } catch (Exception e) {
             System.out.println("There was a problem while adding an asset!");
             System.out.println(e.getMessage());
-            httpStatus = HttpStatus.CONFLICT;
-            response.setHeader("error_Message", e.getMessage());
+            return ResponseEntity.badRequest().body("adding asset failed");
         }
-        response.setStatus(httpStatus.value());
-        return json;
+        return ResponseEntity.ok(json);
     }
 
     @RequestMapping(value = "/editAsset", method = {RequestMethod.POST})

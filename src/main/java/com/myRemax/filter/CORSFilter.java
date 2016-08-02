@@ -1,28 +1,11 @@
 package com.myRemax.filter;
-
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * 
- * <b>Project/Module:</b> jwt-base-server<br/>
- * 
- * <b>Package:</b> ar.com.jwt.base.server.filter<br/>
- * 
- * <b>Class:</b> CORSFilter<br/>
- * 
- * <b>Description:</b> Http filter that allows cross domain access.<br/>
- * 
- * <b>Creation Date:</b> May 23, 2016<br/>
- * 
- * @author Juan P. Holder (juanholder@gmail.com) <br/>
- * <br/>
- */
 public class CORSFilter extends OncePerRequestFilter {
 
 	/*
@@ -35,7 +18,7 @@ public class CORSFilter extends OncePerRequestFilter {
 	private static final String ALLOW_METHODS = "GET, POST, PUT, DELETE";
 	private static final String HEADER_ACCESS_CONTROL_MAX_AGE = "Access-Control-Max-Age";
 	private static final String HEADER_ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
-	private static final String ALLOW_HEADERS = "Content-Type, x-http-method-override, username";
+	private static final String ALLOW_HEADERS = "Content-Type, Authorization";
 
 	/***
 	 * {@inheritDoc}
@@ -47,16 +30,19 @@ public class CORSFilter extends OncePerRequestFilter {
 		if (request.getHeader(HEADER_ACCESS_CONTROL_REQUEST_METHOD) != null
 				&& REQUEST_METHOD.equals(request.getMethod())) {
 			// CORS "pre-flight" request
+			System.out.println(request.getMethod());
 			response.addHeader(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 			response.addHeader(HEADER_ACCESS_CONTROL_ALLOW_METHODS, ALLOW_METHODS);
+			//response.addHeader("Content-Type: application/json;charset=UTF-8")
 			// Set 60 min age.
 			response.addHeader(HEADER_ACCESS_CONTROL_MAX_AGE, "3600");
 			// IMPORTANT: here you shoud add ALL THE REQUIRED HTTP HEADERS TO BE USED.
 			response.addHeader(HEADER_ACCESS_CONTROL_ALLOW_HEADERS, ALLOW_HEADERS);
+			response.setStatus(HttpServletResponse.SC_OK);
+
 		} else {
 			response.addHeader(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+			filterChain.doFilter(request, response);
 		}
-		filterChain.doFilter(request, response);
 	}
-
 }

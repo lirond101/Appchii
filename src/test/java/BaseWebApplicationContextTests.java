@@ -18,7 +18,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/applicationContext.xml","file:src/main/webapp/WEB-INF/spring-servlet.xml" })
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/applicationContext.xml","file:src/main/webapp/WEB-INF/spring-servlet.xml"/*, "file:src/main/webapp/WEB-INF/spring-security.xml"*/ })
 public abstract class BaseWebApplicationContextTests {
 
 

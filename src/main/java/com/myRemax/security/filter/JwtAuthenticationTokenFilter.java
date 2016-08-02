@@ -60,9 +60,10 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 		// Try to retrieve the username from the http request.
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String authToken = httpRequest.getHeader(this.tokenHeader);
+		//String path = httpRequest.getRequestURI();
 		String username = jwtTokenUtil.getUsernameFromToken(authToken);
 
-		// If request do have a username, and there is no spring com.myRemax.security context asociated.
+		// If request do have a username, and there is security context asociated.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			// try to retrieve the userDetails (user data).
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
@@ -75,7 +76,6 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		}
-
 		chain.doFilter(request, response);
 	}
 

@@ -34,6 +34,7 @@
                      <!-- Dummy users/pass/roles -->
                      <security:user-service>
                             <security:user name="testUser" password="testPass" authorities="ROLE_USER" />
+                            <security:user name="moshe123" password="moshe123" authorities="ROLE_USER" />
                             <security:user name="admin" password="admin" authorities="ROLE_ADMIN,ROLE_USER" />
                             <security:user name="sadmin" password="sadmin" authorities="ROLE_SADMIN,ROLE_ADMIN,ROLE_USER" />
                      </security:user-service>

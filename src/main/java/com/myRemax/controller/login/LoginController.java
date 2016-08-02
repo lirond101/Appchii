@@ -60,17 +60,17 @@ public class LoginController {
 //	}
 
 
-
+//	@CrossOrigin(origins = "http://localhost:9000")
 	@RequestMapping(value = "/getAssetsByAgent", method = {RequestMethod.GET}, produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	@PreAuthorize("hasRole('USER')")
 	@JsonView(AssetsEntity.class)
-	public String getAssetsByAgent(@RequestParam("Username") String username, HttpServletResponse response) {
+	public ResponseEntity getAssetsByAgent(@RequestParam("Username") String username/*, HttpServletResponse response*/) {
 
 		System.out.println(username);
 		List<AssetsEntity> l_asset = null;
 		String json = "";
-		HttpStatus httpStatus = HttpStatus.OK;
+		//HttpStatus httpStatus = HttpStatus.OK;
 
 		try {
 			l_asset = assetManager.getAssetsByAgent(username);
@@ -81,11 +81,10 @@ public class LoginController {
 
 		} catch (Exception e) {
 			System.out.println("There was a problem while retreiving assets!");
-			httpStatus = HttpStatus.CONFLICT;
-			response.setHeader("error_Message", e.getMessage());
+			System.out.println(e.getMessage());
+			return ResponseEntity.badRequest().body("retrieving assets failed");
 		}
-		response.setStatus(httpStatus.value());
-		return json;
+		return ResponseEntity.ok(json);
 	}
 }
 

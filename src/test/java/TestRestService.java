@@ -21,8 +21,6 @@ public class TestRestService extends BaseWebApplicationContextTests {
         servlet.service(request, response);
         String result = response.getContentAsString();
         Assert.assertEquals(200, response.getStatus());
-//        String expectedXML = "<book><id>1</id><author>William Smith</author><title>Advanced Java</title></book>";
-//        Assert.assertEquals(expectedXML, result);
     }
 
 //    @Test
@@ -83,13 +81,14 @@ public class TestRestService extends BaseWebApplicationContextTests {
     @Test
     public void testAssetsByParams() throws Exception {
         request.setMethod("POST");
+        //request.addHeader("Authorization", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtb3NoZTEyMyIsImNyZWF0ZWQiOjE0Njg1NjgzNzc2OTAsImV4cCI6MTQ2OTE3MzE3N30.FLebLL0MS4Y7qGG-JvQcZOYckTSTr_DeLJeO3A6phk3V7GhOQzKh2m1DjFqNXJQUPPvy-QNSDq_QvJDB3S-Vow");
         request.addHeader("Accept", "application/json");
         request.addHeader("Content-Type", "application/xml");
-        request.setRequestURI("/search/searchAssetsByParams");
+        request.setRequestURI("/api/search/searchAssetsByParams");
         request.setContentType("application/xml");
-        request.addParameter("City", "תל אביב");
+        request.addParameter("City", "");
         request.addParameter("Type", "וילה");
-        request.addParameter("Agent", "moshe");
+        request.addParameter("Agent", "משה");
         request.addParameter("FromFloor", "");
         request.addParameter("ToFloor", "");
         request.addParameter("FromPrice", "");
@@ -108,6 +107,22 @@ public class TestRestService extends BaseWebApplicationContextTests {
         //String expectedJSON = "{\"author\":\"William Smith\",\"title\":\"Advanced Java\",\"id\":1}";
         //Assert.assertEquals(createTree(expectedJSON), createTree(result));
     }
+
+//    @Test
+//    public void testGetToken() throws Exception {
+//        request.setMethod("POST");
+//        request.addHeader("Accept", "application/json");
+//        request.addHeader("Content-Type", "application/json");
+//        request.setRequestURI("/api/security/auth");
+//        //request.setContentType("application/xml");
+//
+//        servlet.service(request, response);
+//        String result = response.getContentAsString();
+//        Assert.assertEquals(200, response.getStatus());
+//        System.out.println(result);
+//        //String expectedJSON = "{\"author\":\"William Smith\",\"title\":\"Advanced Java\",\"id\":1}";
+//        //Assert.assertEquals(createTree(expectedJSON), createTree(result));
+//    }
 
 //    private JsonNode createTree(String jsonString) throws IOException {
 //        ObjectMapper mapper = new ObjectMapper();

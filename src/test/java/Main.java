@@ -18,7 +18,12 @@ public class Main {
 
     public static void main(String[] args) {
         //getAssetByAgentName();
-        insertAssetTest();
+//        insertAssetTest();
+        getAssetByAgentName("שה");
+//        getAssetByAgentName("מש אטס");
+//        checkSubString("משה אטס");
+//        checkSubString("משה בן לולו");
+//        checkSubString("משה ");
     }
 
 
@@ -59,7 +64,7 @@ public class Main {
                 + "\nUser count: " + users.size());
     }
 
-    public static void getAssetByAgentName() {
+    public static void getAssetByAgentName(String name) {
         ApplicationContext ctx =
                 new ClassPathXmlApplicationContext("spring.xml");
         AssetManager assetManager =
@@ -68,10 +73,10 @@ public class Main {
                 (UserManager) ctx.getBean("userManagerImpl");
 
         try {
-//            Integer agentID = userManager.getUserByName("moshe");
+            Integer agentID = userManager.getUserByName(name);
 
-            List<AssetsEntity> a = assetManager.getAssetsByAgent("moshe123");
-            System.out.println(a.size());
+//            List<AssetsEntity> a = assetManager.("moshe123");
+            System.out.println(agentID);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -97,5 +102,24 @@ public class Main {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public static void checkSubString(String name) {
+        ApplicationContext ctx =
+                new ClassPathXmlApplicationContext("spring.xml");
+        AssetManager assetManager =
+                (AssetManager) ctx.getBean("assetManagerImpl");
+        UserManager userManager =
+                (UserManager) ctx.getBean("userManagerImpl");
+
+        int index = name.indexOf(' ');
+        if (index != -1 && name.length()-(index+1)>0) {
+            String fn = name.substring(0, index);
+            System.out.println(fn);
+            String ln = name.substring(index, name.length());
+            System.out.println(ln);
+        }
+        else
+            System.out.println("stam");
     }
 }
